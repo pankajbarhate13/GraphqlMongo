@@ -1,15 +1,25 @@
 import { gql } from 'apollo-server-express';
+import mongoose from "mongoose";
+
+const { ObjectId } = mongoose.Types;
+
+ObjectId.prototype.valueOf = function() {
+  return this.toString();
+};
+
+
 
 export const typeDefs = gql`
     type Friend{
-       id:ID
-       firstName:String
-       lastName:String
-       gender:Gender
-       language:String
-       age:Int
-       email: String
-       contacts:[Contact]
+        id:ID
+        firstName:String
+        lastName:String
+        gender:Gender
+        language:String
+        age:Int
+        email: String
+        contacts:[Contact]
+        seriesId: Series
     }
 
     type Contact{
@@ -28,6 +38,8 @@ export const typeDefs = gql`
         ONE
         TWO
         THREE
+        FOUR
+        FIVE
     }
 
     enum Gender{
@@ -52,6 +64,7 @@ export const typeDefs = gql`
         age:Int
         email: String
         contacts:[ContactInput]
+        seriesId: ID
     }
 
     input ContactInput{

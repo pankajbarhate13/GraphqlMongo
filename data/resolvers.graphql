@@ -6,13 +6,12 @@ import {Friends,Series} from '../db/dbConnector.js'
 
 export const resolvers={
     Query:{
-            getAllFriend:(root)=>{
-                return new Promise((resolve,reject)=>{
-                    Friends.find((err,friends)=>{
-                        if(err) reject(err);
-                        else resolve(friends);
-                    })
-                })
+            getAllFriend:async (root)=>{
+                return await Friends.find({})
+                .populate({ 
+                    path: 'seriesId',
+                    select: 'id seriesName year rating'
+                });
             },
             findASeries:(root,{id})=>{
                 return new Promise((resolve,reject)=>{
@@ -32,7 +31,8 @@ export const resolvers={
                 language : input.language,
                 age : input.age,
                 email : input.email,
-                contacts:input.contacts
+                contacts:input.contacts,
+                seriesId: input.seriesId
             });
 
             newFriend.id=newFriend._id;

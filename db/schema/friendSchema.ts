@@ -22,4 +22,5 @@ export const friendSchema = new mongoose.Schema({
     contacts: {
         type: Array
     },
+    seriesId: { type: mongoose.Types.ObjectId, ref: 'Series' }
 });
